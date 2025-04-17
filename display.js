@@ -29,6 +29,13 @@ bricsButton.addEventListener('click', () => displayItem(bricsGenerator.generateI
 specialItemButton.addEventListener('click', () => displayItem(specialItemGenerator.generateItem()));
 resetItems.addEventListener('click', () => itens_dropped.innerHTML = '');
 
+const toggleDropdownButton = document.getElementById("toggleDropdown");
+const dropdownMenu = document.getElementById("dropdownMenu");
+
+toggleDropdownButton.addEventListener("click", () => {
+	dropdownMenu.classList.toggle("show");
+});
+
 generateItemsButton.addEventListener('click', () => {
 	const itemCount = parseInt(itemCountInput.value);
 
@@ -40,13 +47,14 @@ generateItemsButton.addEventListener('click', () => {
 	itens_dropped.innerHTML = '';
 
 	for (let i = 0; i < itemCount; i++) {
-		const {type} = dropSystem.dropItem();
+		const { type } = dropSystem.dropItem();
 		const item = executeItemGenerator.generateItem(type, playerLevel.value);
 		displayItem(item);
 	}
 });
 
 function displayItem(item) {
+	console.log(item)
 	const card = document.createElement('div');
 	card.className = `item-card rarity-${item.rarity}`;
 	const rarityClass = item.rarity.toLowerCase();
@@ -55,7 +63,7 @@ function displayItem(item) {
 
 	card.innerHTML = `
     <h3 class="${rarityClass}">${item.type.toUpperCase()} (${item.rarity})</h3>
-    <h5 class="item-type">${item.itemType || ''}</h5>
+    <h5 class="item-type">${item.model || ''}</h5>
     <hr>
     <ul>
       ${item.options.map(opt => {
