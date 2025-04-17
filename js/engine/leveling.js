@@ -1,5 +1,9 @@
 export default {
-    itemFactor: function() {
+    itemStatus: function (level) {
+        return Math.ceil(this.itemFactor() * (level / 10))
+    },
+
+    itemFactor: function () {
         let value = Math.floor((Math.random() * 10) + 1);
 
         if (value > 5 && Math.random() > 0.5) value = Math.floor(Math.random() * 5) + 1;
