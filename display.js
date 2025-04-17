@@ -1,5 +1,7 @@
 import executeItemGenerator from './js/engine/itemsGenerator.js';
 import translationMap from './js/rules/translateMap.js';
+import armorGenerator from './js/engine/armorGenerator.js';
+import weaponGenerator from './js/engine/weaponGenerator.js';
 
 const itens_dropped = document.getElementById('itens_dropped');
 const weaponButton = document.getElementById('generateWeapon');
@@ -9,12 +11,12 @@ const itemCountInput = document.getElementById('itemCount');
 const playerLevel = document.getElementById('playerLevel');
 
 weaponButton.addEventListener('click', () => {
-    const item = executeItemGenerator.generateItem("weapon", playerLevel.value);
+    const item = weaponGenerator.generateItem(playerLevel.value);
     displayItem(item);
 });
 
 armorButton.addEventListener('click', () => {
-    const item = executeItemGenerator.generateItem("armor", playerLevel.value);
+    const item = armorGenerator.generateItem(playerLevel.value);
     displayItem(item);
 });
 
@@ -46,6 +48,8 @@ function displayItem(item) {
 
     card.innerHTML = `
     <h3 class="${rarityClass}">${item.type.toUpperCase()} (${item.rarity})</h3>
+    <h5 class="item-type">${item.itemType || ''}</h5>
+    <hr>
     <ul>
       ${item.options.map(opt => {
         let translatedOpt = translationMapSelected[opt.description] || opt;
