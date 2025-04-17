@@ -26,6 +26,7 @@ export default {
         increased_elemental_damage: "Dano Elemental Aumentado",
         damage_buff_adjacent_allies: "Buff de Dano aos Aliados Adjacentes"
     },
+    
     armor: {
         physical_defense: "Defesa Física",
         magic_defense: "Defesa Mágica",
@@ -50,5 +51,23 @@ export default {
         revive_roll_bonus: "Bônus na Rolagem de Reviver",
         elemental_damage_reflect_on_hit: "Reflexão de Dano Elemental ao Ser Atacado"
     },
-    item: {},
+
+    weaponTranslations: {
+        two_hands_sword: "Espada 2M",
+        one_hand_sword: "Espada 1M",
+        two_hands_axe: "Machado 2M",
+        two_hands_spear: "Lança 2M",
+        two_hands_bow: "Arco 2M",
+        one_hand_dagger: "Adaga 1M",
+        one_hand_knife: "Faca 1M",
+        one_hand_staff: "Cajado 1M",
+        two_hands_staff: "Cajado 2M",
+        two_hands_firearm: "Arma de Fogo 2M",
+        one_hand_firearm: "Arma de Fogo 1M",
+        one_hand_hammer: "Martelo 1M",
+        one_hand_club: "Clava 1M",
+        two_hands_hammer: "Martelo 2M",
+        two_hands_club: "Clava 2M",
+        one_hand_spellbook: "Livro de Feitiços 1M"
+    },
 };
