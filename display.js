@@ -1,63 +1,70 @@
 import executeItemGenerator from './js/engine/itemsGenerator.js';
 import translationMap from './js/rules/translateMap.js';
-import armorGenerator from './js/engine/armorGenerator.js';
-import weaponGenerator from './js/engine/weaponGenerator.js';
+import armorGenerator from './js/engine/itemGenerators/armorGenerator.js';
+import weaponGenerator from './js/engine/itemGenerators/weaponGenerator.js';
+import orbGenerator from './js/engine/itemGenerators/orbGenerator.js';
+import dropSystem from './js/rules/dropSystem/dropSystem.js';
+import potionGenerator from './js/engine/itemGenerators/potionGenerator.js';
+import bricsGenerator from './js/engine/itemGenerators/bricsGenerator.js';
+import specialItemGenerator from './js/engine/itemGenerators/specialItemGenerator.js';
 
 const itens_dropped = document.getElementById('itens_dropped');
-const weaponButton = document.getElementById('generateWeapon');
-const armorButton = document.getElementById('generateArmor');
-const generateItemsButton = document.getElementById('generateRandomItems');
 const itemCountInput = document.getElementById('itemCount');
 const playerLevel = document.getElementById('playerLevel');
 
-weaponButton.addEventListener('click', () => {
-    const item = weaponGenerator.generateItem(playerLevel.value);
-    displayItem(item);
-});
+const weaponButton = document.getElementById('generateWeapon');
+const armorButton = document.getElementById('generateArmor');
+const orbButton = document.getElementById('generateOrb');
+const potionButton = document.getElementById('generatePotion');
+const bricsButton = document.getElementById('generateBrics');
+const specialItemButton = document.getElementById('generateSpecialItem');
+const generateItemsButton = document.getElementById('generateRandomItems');
+const resetItems = document.getElementById('resetItems');
 
-armorButton.addEventListener('click', () => {
-    const item = armorGenerator.generateItem(playerLevel.value);
-    displayItem(item);
-});
+weaponButton.addEventListener('click', () => displayItem(weaponGenerator.generateItem(playerLevel.value)));
+armorButton.addEventListener('click', () => displayItem(armorGenerator.generateItem(playerLevel.value)));
+orbButton.addEventListener('click', () => displayItem(orbGenerator.generateItem()));
+potionButton.addEventListener('click', () => displayItem(potionGenerator.generateItem(playerLevel.value)));
+bricsButton.addEventListener('click', () => displayItem(bricsGenerator.generateItem(playerLevel.value)));
+specialItemButton.addEventListener('click', () => displayItem(specialItemGenerator.generateItem()));
+resetItems.addEventListener('click', () => itens_dropped.innerHTML = '');
 
 generateItemsButton.addEventListener('click', () => {
-  const itemCount = parseInt(itemCountInput.value);
-  
-  if (itemCount < 1 || itemCount > 3) {
-    alert("Por favor, escolha um número entre 1 e 3.");
-    return;
-  }
+	const itemCount = parseInt(itemCountInput.value);
 
-  itens_dropped.innerHTML = '';
+	if (itemCount < 1 || itemCount > 10) {
+		alert("Por favor, escolha um número entre 1 e 10.");
+		return;
+	}
 
-  for (let i = 0; i < itemCount; i++) {
-    const type = Math.random() < 0.5 ? 'weapon' : 'armor';
-    const item = executeItemGenerator.generateItem(type, playerLevel.value);
-    displayItem(item);
-  }
+	itens_dropped.innerHTML = '';
+
+	for (let i = 0; i < itemCount; i++) {
+		const {type} = dropSystem.dropItem();
+		const item = executeItemGenerator.generateItem(type, playerLevel.value);
+		displayItem(item);
+	}
 });
 
 function displayItem(item) {
-    const card = document.createElement('div');
-    card.className = `item-card rarity-${item.rarity}`;
-    const rarityClass = item.rarity.toLowerCase();
+	const card = document.createElement('div');
+	card.className = `item-card rarity-${item.rarity}`;
+	const rarityClass = item.rarity.toLowerCase();
 
-    const translationMapSelected = item.type === "weapon"
-        ? translationMap.weapon
-        : translationMap.armor;
+	const translationMapSelected = translationMap[item.type]
 
-    card.innerHTML = `
+	card.innerHTML = `
     <h3 class="${rarityClass}">${item.type.toUpperCase()} (${item.rarity})</h3>
     <h5 class="item-type">${item.itemType || ''}</h5>
     <hr>
     <ul>
       ${item.options.map(opt => {
-        let translatedOpt = translationMapSelected[opt.description] || opt;
-        translatedOpt = translatedOpt.replace(" + Dado", "");
-        return `<li>${translatedOpt}${opt.status}${opt.diceBonus}</li>`;
-      }).join('')}
+		let translatedOpt = translationMapSelected[opt.description] || opt.description;
+		translatedOpt = translatedOpt.replace(" + Dado", "");
+		return `<li>${translatedOpt}${opt.status}${opt.diceBonus}</li>`;
+	}).join('')}
     </ul>
   `;
 
-    itens_dropped.appendChild(card);
+	itens_dropped.appendChild(card);
 }
