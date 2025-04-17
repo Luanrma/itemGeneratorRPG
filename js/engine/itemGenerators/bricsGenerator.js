@@ -5,7 +5,7 @@ export default {
         return {
             type: "brics",
             rarity: "common",
-            itemType: (armorAndWeaponsStatusGeneratorByLevel(playerLevel) * 2),
+            model: (armorAndWeaponsStatusGeneratorByLevel(playerLevel) * 2),
             options: []
         };
     },
