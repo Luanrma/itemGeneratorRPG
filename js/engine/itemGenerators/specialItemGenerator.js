@@ -5,7 +5,7 @@ export default {
         return {
             type: "Item Especial",
             rarity: "legendary",
-            itemType: "Item Especial",
+            model: "Item Especial",
             options: []
         };
     },
