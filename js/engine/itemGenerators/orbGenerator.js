@@ -19,7 +19,7 @@ export default {
         return {
             type: "orb",
             rarity: drop.rarity,
-            itemType: this.translateOrb(drop.orb),
+            model: this.translateOrb(drop.orb),
             options: []
         };
     },
