@@ -4,35 +4,33 @@ import translationMap from './js/rules/translateMap.js';
 const itens_dropped = document.getElementById('itens_dropped');
 const weaponButton = document.getElementById('generateWeapon');
 const armorButton = document.getElementById('generateArmor');
-const generateItemsButton = document.getElementById('generateItems');
+const generateItemsButton = document.getElementById('generateRandomItems');
 const itemCountInput = document.getElementById('itemCount');
-
+const playerLevel = document.getElementById('playerLevel');
 
 weaponButton.addEventListener('click', () => {
-    const item = executeItemGenerator.generateItem("weapon");
+    const item = executeItemGenerator.generateItem("weapon", playerLevel.value);
     displayItem(item);
 });
 
 armorButton.addEventListener('click', () => {
-    const item = executeItemGenerator.generateItem("armor");
+    const item = executeItemGenerator.generateItem("armor", playerLevel.value);
     displayItem(item);
 });
 
 generateItemsButton.addEventListener('click', () => {
   const itemCount = parseInt(itemCountInput.value);
   
-  if (itemCount < 1 || itemCount > 6) {
-    alert("Por favor, escolha um número entre 1 e 6.");
+  if (itemCount < 1 || itemCount > 3) {
+    alert("Por favor, escolha um número entre 1 e 3.");
     return;
   }
 
-  // Limpar os itens anteriores
   itens_dropped.innerHTML = '';
 
-  // Gerar o número de itens escolhido pelo usuário
   for (let i = 0; i < itemCount; i++) {
     const type = Math.random() < 0.5 ? 'weapon' : 'armor';
-    const item = executeItemGenerator.generateItem(type);
+    const item = executeItemGenerator.generateItem(type, playerLevel.value);
     displayItem(item);
   }
 });
@@ -59,6 +57,3 @@ function displayItem(item) {
 
     itens_dropped.appendChild(card);
 }
-
-
-
