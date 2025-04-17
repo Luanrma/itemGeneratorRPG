@@ -1,0 +1,19 @@
+.rarity-common h3 {
+  color: #a0a0a0;
+}
+
+.rarity-uncommon h3 {
+  color: #ffffff;
+}
+
+.rarity-rare h3 {
+  color: #4a90e2;
+}
+
+.rarity-epic h3 {
+  color: #9b59b6;
+}
+
+.rarity-legendary h3 {
+  color: #e67e22;
+}
