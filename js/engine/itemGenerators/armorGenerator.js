@@ -7,7 +7,7 @@ export default {
         const rarity = this.getRandomRarity();
         const optsCount = itemsInfo.rarity_table[rarity];
         const selectedOpts = [];
-        const itemType = this.getRandomArmorPart();
+        const model = this.getRandomArmorPart();
 
         for (let i = 1; i <= optsCount; i++) {
             const optKey = `opt_${i}`;
@@ -32,7 +32,7 @@ export default {
         return {
             type: "armor",
             rarity,
-            itemType,
+            model,
             options: selectedOpts
         };
     },
