@@ -22,7 +22,7 @@ export default {
         return {
             type: "potion",
             rarity: drop.rarity,
-            itemType: this.translatePotion(drop.name),
+            model: this.translatePotion(drop.name),
             options: [{description: drop.name, status: drop.value, diceBonus: "" }]
         };
     },
