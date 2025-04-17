@@ -59,6 +59,7 @@ h1 {
 }
 
 button {
+  width: 200px;
   padding: 14px 26px;
   margin: 5px;
   background: #3b82f6;
@@ -120,6 +121,16 @@ hr {
   height: 1px;
   background: #a8a8a8;
   margin: 12px 0;
+}
+
+#generateRandomItems {
+  background-color: rgb(30, 230, 3);
+  color: black;
+}
+
+#resetItems {
+  background-color: rgb(235, 196, 24);
+  color: black;
 }
 
 /* responsividade mobile */
