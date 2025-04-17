@@ -4,8 +4,7 @@ import itemsInfo from '../rules/itemsInfo.js';
 import leveling from './leveling.js';
 
 export default {
-    // --- Main generator ---
-    generateItem: function (type) {
+    generateItem: function (type, playerLevel) {
         const rules = type === "weapon" ? weaponsRules : armorRules;
         const rarity = this.getRandomRarity();
         const optsCount = itemsInfo.rarity_table[rarity];
@@ -13,16 +12,25 @@ export default {
 
         for (let i = 1; i <= optsCount; i++) {
             const optKey = `opt_${i}`;
-            const availableOpts = rules[optKey]().filter(opt =>  !selectedOpts.some(sel => sel.description === opt));
-            if (availableOpts.length === 0) {
-                continue;
+            
+            if (typeof rules[optKey] !== "function") {
+              continue;
             }
+          
+            const availableOpts = rules[optKey]().filter(opt =>  
+              !selectedOpts.some(sel => sel.description === opt)
+            );
+          
+            if (availableOpts.length === 0) {
+              continue;
+            }
+          
             const randomOpt = this.getRandomElement(availableOpts);
-            const statusItem = ` + ${leveling.itemFactor()}`;
+            const statusItem = ` + ${leveling.itemStatus(playerLevel)}`;
             const diceBonus = randomOpt.includes("plus_dice") ? ` + ${this.rollDice()}` : "";
-
-            selectedOpts.push({description: randomOpt, status: statusItem, diceBonus: diceBonus});
-        }
+          
+            selectedOpts.push({ description: randomOpt, status: statusItem, diceBonus: diceBonus });
+          }
 
         return {
             type,
@@ -31,7 +39,6 @@ export default {
         };
     },
 
-    // --- Rarity Roll ---
     getRandomRarity: function () {
         const roll = Math.floor(Math.random() * 100) + 1;
 
@@ -42,7 +49,6 @@ export default {
         if (roll >= 94 && roll <= 100) return "legendary";
     },
 
-    // --- Helper: Get random element from array ---
     getRandomElement: function (arr) {
         return arr[Math.floor(Math.random() * arr.length)];
     },
