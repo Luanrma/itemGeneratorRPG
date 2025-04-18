@@ -1,0 +1,1 @@
+export const generateRandomNumberWithMaxRange = (maxRange) => Math.floor(Math.random() * maxRange) + 1;
